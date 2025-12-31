@@ -21,5 +21,6 @@ qt5-wayland
 qt6-wayland
 sddm
 dolphin
+xdg-desktop-portal-gtk
 ttf-firacode-nerd
 ffmpeg
