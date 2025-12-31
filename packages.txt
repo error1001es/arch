@@ -10,6 +10,7 @@ pipewire
 pipewire-pulse
 pipewire-alsa
 wireplumber
+pavucontrol
 mesa
 vulkan-icd-loader
 base-devel
