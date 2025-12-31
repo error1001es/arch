@@ -1,6 +1,7 @@
 {
     "layer": "top",
     "position": "top",
+    "height": 34,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["cpu", "temperature", "memory"],
     "modules-right": ["pulseaudio", "tray", "clock"],
@@ -11,7 +12,7 @@
     },
 
     "clock": {
-        "format": "{:%d.%m.%Y - %H:%M} ",
+        "format": "{:%H:%M - %d.%m.%Y} ",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
@@ -22,7 +23,6 @@
     },
 
     "temperature": {
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input", // Removed specific path to allow auto-detection
         "critical-threshold": 80,
         "format": " {temperatureC}°C",
         "tooltip": false,

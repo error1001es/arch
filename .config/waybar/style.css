@@ -1,89 +1,55 @@
+/* --- Variables --- */
+@define-color bg #1a1b26;
+@define-color text #c0caf5;
+@define-color text-dark #1a1b26;
+
+@define-color color-cpu #e0af68;  /* Orange */
+@define-color color-temp #7dcfff; /* Blue */
+@define-color color-mem #9ece6a;  /* Green */
+@define-color color-audio #bb9af7;
+@define-color color-clock #f7768e;
+
+/* --- Reset & Base --- */
 * {
     border: none;
     border-radius: 0;
-    font-family: "FiraCode Nerd Font", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "FiraCode Nerd Font";
     font-size: 14px;
     font-weight: bold;
 }
 
 window#waybar {
-    background-color: rgba(26, 27, 38, 0.8);
-    border-bottom: 2px solid rgba(100, 114, 125, 0.3);
-    color: #c0caf5;
-    transition-property: background-color;
-    transition-duration: .5s;
+    background: @bg;
+    color: @text;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-/* --- Modules --- */
-
-.modules-left, .modules-center, .modules-right {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-/* Common style for "pill" modules */
-#clock,
-#cpu,
-#memory,
-#temperature,
-#pulseaudio,
-#tray {
-    padding: 0 15px;
-    margin: 0 5px;
-    border-radius: 15px;
-    color: #1a1b26; /* Dark text on colored pills */
-}
-
-/* --- Specific Colors --- */
-
-#workspaces {
-    background: transparent;
-    margin-left: 10px;
-}
-
+/* --- Workspaces --- */
 #workspaces button {
     padding: 0 10px;
-    color: #c0caf5;
+    color: @text;
     background: transparent;
 }
 
 #workspaces button.active {
-    color: #7aa2f7;
-    background-color: rgba(122, 162, 247, 0.2);
+    color: @color-temp;
+}
+
+/* --- Modules Common --- */
+#cpu, #temperature, #memory, #pulseaudio, #clock, #tray {
+    padding: 0 15px;
+    margin: 4px 4px;
     border-radius: 15px;
+    color: @text-dark;
 }
 
-#workspaces button:hover {
-    background-color: rgba(122, 162, 247, 0.1);
-    border-radius: 15px;
-}
-
-#cpu {
-    background-color: #bb9af7; /* Purple */
-}
-
-#temperature {
-    background-color: #f7768e; /* Red/Pink */
-}
-
-#memory {
-    background-color: #9ece6a; /* Green */
-}
-
-#pulseaudio {
-    background-color: #7dcfff; /* Cyan */
-}
-
-#clock {
-    background-color: #e0af68; /* Orange/Yellow */
-    margin-right: 15px;
-}
+/* --- Module Specifics --- */
+#cpu { background-color: @color-cpu; }
+#temperature { background-color: @color-temp; }
+#memory { background-color: @color-mem; }
+#pulseaudio { background-color: @color-audio; }
+#clock { background-color: @color-clock; }
 
 #tray {
-    background-color: #24283b;
-    color: #c0caf5;
+    background-color: shade(@bg, 1.2); /* Slightly lighter than bar */
+    color: @text;
 }
