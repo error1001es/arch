@@ -23,3 +23,6 @@ nwg-look
 qt5-wayland
 qt6-wayland
 sddm
+dolphin
+ttf-firacode-nerd
+ffmpeg
