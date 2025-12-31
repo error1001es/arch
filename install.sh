@@ -2,7 +2,6 @@
 
 # 0. Подготовка pacman и установка базовых зависимостей
 echo "Обновляю базы и устанавливаю git/base-devel..."
-sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sudo pacman -Sy --noconfirm git base-devel
 
 # 1. Установка yay (AUR помощник)
@@ -36,7 +35,7 @@ else
 fi
 
 # 5. Применение фиксов
-echo "--ozone-platform-hint=auto" > ~/.config/chrome-flags.conf
+echo "Включаю SDDM..."
 sudo systemctl enable sddm
 
 echo "Установка завершена! Перезагрузись."
