@@ -38,18 +38,21 @@
         "interval": 3
     },
 
-    "modules-right": ["custom/audio", "tray", "clock"],
-    
-    "custom/audio": {
-        "format": "{}",
-        "exec": "/home/artyom/.config/waybar/scripts/audio_info.sh",
-        "return-type": "json",
-        "on-click": "/home/artyom/.config/waybar/scripts/advanced_audio.sh",
-        "on-click-right": "pavucontrol",
-        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
-        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -1%",
-        "interval": 1,
-        "tooltip": true
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " Muted",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol"
     },
 
     "tray": {
