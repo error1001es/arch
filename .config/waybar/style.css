@@ -35,9 +35,9 @@ window#waybar {
 }
 
 /* --- Modules Common --- */
-#cpu, #temperature, #memory, #pulseaudio, #clock, #tray {
+#cpu, #temperature, #memory, #pulseaudio, #clock {
     padding: 0 15px;
-    margin: 4px 4px;
+    margin: 4px 6px;
     border-radius: 15px;
     color: @text-dark;
 }
@@ -49,7 +49,10 @@ window#waybar {
 #pulseaudio { background-color: @color-audio; }
 #clock { background-color: @color-clock; }
 
-#tray {
-    background-color: shade(@bg, 1.2); /* Slightly lighter than bar */
+/* --- Transparent Modules --- */
+#tray, #language {
+    padding: 0 10px;
+    margin: 0 5px;
+    background-color: transparent;
     color: @text;
 }
