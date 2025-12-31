@@ -17,6 +17,7 @@ vulkan-icd-loader
 base-devel
 git
 fastfetch
+btop
 nwg-look
 qt5-wayland
 qt6-wayland
