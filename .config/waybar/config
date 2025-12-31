@@ -8,7 +8,10 @@
     
     "hyprland/workspaces": {
         "format": "{icon}",
-        "on-click": "activate"
+        "on-click": "activate",
+        "persistent-workspaces": {
+            "*": 4
+        }
     },
 
     "clock": {
