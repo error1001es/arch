@@ -52,7 +52,9 @@
             "default": ["", ""]
         },
         "scroll-step": 1,
-        "on-click": "pavucontrol"
+        "on-click": "/home/artyom/.config/waybar/scripts/advanced_audio.sh",
+        "on-click-right": "pavucontrol",
+        "on-click-middle": "pavucontrol"
     },
 
     "tray": {
