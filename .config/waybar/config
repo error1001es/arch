@@ -52,8 +52,7 @@
             "default": ["", ""]
         },
         "scroll-step": 1,
-        "on-click": "~/.config/waybar/scripts/sound_menu.sh",
-        "on-click-right": "pavucontrol"
+        "on-click": "pavucontrol"
     },
 
     "tray": {

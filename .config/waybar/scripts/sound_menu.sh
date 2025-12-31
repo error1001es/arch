@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Debugging
+LOG_FILE="/tmp/sound_menu.log"
+echo "Script started at $(date)" > "$LOG_FILE"
+
 # Configuration
 ROFI_CMD="rofi -dmenu -i -p"
 
@@ -7,10 +11,14 @@ ROFI_CMD="rofi -dmenu -i -p"
 sink_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}')
 source_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | head -n 1 | awk '{print $5}')
 
+echo "Volumes: Sink=$sink_vol, Source=$source_vol" >> "$LOG_FILE"
+
 # Main options
 options="🔊 Output Device\n🎤 Input Device\n🔊 Output Volume [$sink_vol]\n🎤 Input Volume [$source_vol]"
 
 selected=$(echo -e "$options" | $ROFI_CMD "Audio Control")
+
+echo "Selected: $selected" >> "$LOG_FILE"
 
 case "$selected" in
     "🔊 Output Device")
