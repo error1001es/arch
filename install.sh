@@ -17,8 +17,8 @@ fi
 echo "Устанавливаю пакеты..."
 yay -S --noconfirm - < packages.txt
 
-# 3. Установка Google Chrome (из AUR отдельно) и других AUR пакетов
-yay -S --noconfirm google-chrome xdg-desktop-portal-hyprland-git
+# 3. Установка других AUR пакетов
+yay -S --noconfirm xdg-desktop-portal-hyprland-git
 
 # 4. Копирование конфигов (САМАЯ ВАЖНАЯ ЧАСТЬ)
 echo "Копирую настройки..."
