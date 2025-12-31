@@ -2,25 +2,88 @@
     border: none;
     border-radius: 0;
     font-family: "FiraCode Nerd Font", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 window#waybar {
-    background-color: rgba(26, 27, 38, 0.7); /* Темный полупрозрачный */
+    background-color: rgba(26, 27, 38, 0.8);
     border-bottom: 2px solid rgba(100, 114, 125, 0.3);
-    color: #ffffff;
+    color: #c0caf5;
     transition-property: background-color;
     transition-duration: .5s;
 }
 
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* --- Modules --- */
+
+.modules-left, .modules-center, .modules-right {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Common style for "pill" modules */
+#clock,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#tray {
+    padding: 0 15px;
+    margin: 0 5px;
+    border-radius: 15px;
+    color: #1a1b26; /* Dark text on colored pills */
+}
+
+/* --- Specific Colors --- */
+
+#workspaces {
+    background: transparent;
+    margin-left: 10px;
+}
+
 #workspaces button {
-    padding: 0 5px;
-    background-color: transparent;
-    color: #ffffff;
+    padding: 0 10px;
+    color: #c0caf5;
+    background: transparent;
 }
 
 #workspaces button.active {
-    background-color: #7aa2f7;
-    color: #1a1b26;
-    border-radius: 5px;
+    color: #7aa2f7;
+    background-color: rgba(122, 162, 247, 0.2);
+    border-radius: 15px;
+}
+
+#workspaces button:hover {
+    background-color: rgba(122, 162, 247, 0.1);
+    border-radius: 15px;
+}
+
+#cpu {
+    background-color: #bb9af7; /* Purple */
+}
+
+#temperature {
+    background-color: #f7768e; /* Red/Pink */
+}
+
+#memory {
+    background-color: #9ece6a; /* Green */
+}
+
+#pulseaudio {
+    background-color: #7dcfff; /* Cyan */
+}
+
+#clock {
+    background-color: #e0af68; /* Orange/Yellow */
+    margin-right: 15px;
+}
+
+#tray {
+    background-color: #24283b;
+    color: #c0caf5;
 }
