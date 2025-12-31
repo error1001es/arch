@@ -2,9 +2,12 @@
 
 # Config
 THEME="$HOME/.config/rofi/sound.rasi"
-ROFI_CMD="rofi -dmenu -theme $THEME"
+# Using -format 'i s' to get both index and string if needed, but simple string matching is easier for now.
+# We remove the custom separator logic that caused "strange symbols".
+ROFI_CMD="rofi -dmenu -theme $THEME -p"
 
-# Functions to get info
+# --- Helpers ---
+
 get_default_sink() {
     pactl get-default-sink
 }
@@ -13,160 +16,142 @@ get_default_source() {
     pactl get-default-source
 }
 
-get_sink_vol() {
-    pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | tr -d '%'
+get_volume() {
+    # $1 = @DEFAULT_SINK@ or @DEFAULT_SOURCE@
+    pactl get-sink-volume "$1" 2>/dev/null | head -n 1 | awk '{print $5}' | tr -d '%' || \
+    pactl get-source-volume "$1" 2>/dev/null | head -n 1 | awk '{print $5}' | tr -d '%' 
 }
 
-get_source_vol() {
-    pactl get-source-volume @DEFAULT_SOURCE@ | head -n 1 | awk '{print $5}' | tr -d '%'
-}
+# --- Parsing Sinks/Sources ---
+# We use arrays to strictly map Descriptions to Names
 
-get_sink_name() {
-    pactl list sinks | grep -C2 "$(get_default_sink)" | grep "Description" | cut -d: -f2 | xargs
-}
+# Read Sink Names (Technical IDs)
+mapfile -t SINK_NAMES < <(pactl list short sinks | awk '{print $2}')
+# Read Sink Descriptions (Pretty Names)
+mapfile -t SINK_DESCS < <(pactl list sinks | grep 'Description:' | cut -d: -f2 | sed 's/^[ 	]*//')
 
-get_source_name() {
-    pactl list sources | grep -C2 "$(get_default_source)" | grep "Description" | cut -d: -f2 | xargs
-}
+# Read Source Names
+mapfile -t SOURCE_NAMES < <(pactl list short sources | grep -v "\.monitor" | awk '{print $2}')
+mapfile -t SOURCE_DESCS < <(pactl list sources | grep -v "\.monitor" | grep 'Description:' | cut -d: -f2 | sed 's/^[ 	]*//')
 
-# --- Main Menu Generator ---
+
+# --- Menus ---
+
 main_menu() {
-    sink_name=$(get_sink_name)
-    source_name=$(get_source_name)
-    sink_vol=$(get_sink_vol)
-    source_vol=$(get_source_vol)
-
-    echo -e "🔊 Output: $sink_name\n🎤 Input: $source_name\n🔈 Output Volume: ${sink_vol}%\n🎙  Input Volume: ${source_vol}%"
-}
-
-# --- Sub Menus ---
-select_sink() {
-    # Parse sinks: ID 	 Description
-    pactl list sinks | grep -E 'Name:|Description:' | awk 'NR%2{printf "%s\t", $2} NR%2==0{ $1=""; print $0}' | sed 's/Name: //; s/Description: //' | \
-    while IFS=$'\t' read -r name desc; do
-        if [ "$name" == "$(get_default_sink)" ]; then
-            echo -e "* $desc\0icon\x1faudio-card\x1finfo\x1f$name"
-        else
-            echo -e "  $desc\0icon\x1faudio-card\x1finfo\x1f$name"
+    # Get current state
+    cur_sink=$(get_default_sink)
+    cur_source=$(get_default_source)
+    
+    # Find pretty name for current sink
+    cur_sink_desc="Unknown"
+    for i in "${!SINK_NAMES[@]}"; do
+        if [[ "${SINK_NAMES[$i]}" == "$cur_sink" ]]; then
+            cur_sink_desc="${SINK_DESCS[$i]}"
+            break
         fi
     done
-}
 
-select_source() {
-    pactl list sources | grep -v ".monitor" | grep -E 'Name:|Description:' | awk 'NR%2{printf "%s\t", $2} NR%2==0{ $1=""; print $0}' | sed 's/Name: //; s/Description: //' | \
-    while IFS=$'\t' read -r name desc; do
-        if [ "$name" == "$(get_default_source)" ]; then
-            echo -e "* $desc\0icon\x1fmicrophone\x1finfo\x1f$name"
-        else
-            echo -e "  $desc\0icon\x1fmicrophone\x1finfo\x1f$name"
+    # Find pretty name for current source
+    cur_source_desc="Unknown"
+    for i in "${!SOURCE_NAMES[@]}"; do
+        if [[ "${SOURCE_NAMES[$i]}" == "$cur_source" ]]; then
+            cur_source_desc="${SOURCE_DESCS[$i]}"
+            break
         fi
     done
+    
+    vol_out=$(get_volume @DEFAULT_SINK@)
+    vol_in=$(get_volume @DEFAULT_SOURCE@)
+
+    # Output lines
+    echo "🔊 Out: $cur_sink_desc"
+    echo "🎤 In:  $cur_source_desc"
+    echo "🔈 Vol Out: $vol_out%"
+    echo "🎙  Vol In:  $vol_in%"
 }
 
-gen_vol_list() {
-    # Generate volume steps
-    current=$1
-    echo -e "🔇 Mute\0info\x1fmute"
-    for i in {0..120..10}; do
-        bar=""
-        # Simple progress bar
-        dots=$((i / 10))
-        for ((j=0; j<dots; j++)); do bar="${bar}█"; done
-        for ((j=dots; j<12; j++)); do bar="${bar}░"; done
-        
-        if [ "$i" -eq "$current" ]; then
-            echo -e "* $i%  $bar\0info\x1f$i"
-        else
-            echo -e "  $i%  $bar\0info\x1f$i"
-        fi
-    done
-}
+# --- Actions ---
 
-# --- Logic ---
-
-# Check if arguments passed to handle sub-menus
-case "$1" in
-    "select_sink")
-        selection=$(select_sink | $ROFI_CMD -p "Select Output" -format 'i s')
-        if [ -n "$selection" ]; then
-            # Extract name from the info field (requires rofi support or parsing line)
-            # Simplified: re-parse list based on index or parsing text
-            # Better approach: We use the text directly if simple, but here we used info hack.
-            # Let's simple parse the 'Name' from the line if possible, or use the pactl list again.
-            # Rofi dmenu returns the string. Let's rely on grep.
-            
-            # Let's keep it simple: Just rerun logic inside the script
-            # We will use specific format for selection to make it easier
-             sink_id=$(echo "$selection" | awk -F'\x1f' '{print $3}')
-             # Fallback if binary data not preserved (dmenu mode usually strips hidden info without specific flags)
-             # Actually, simpler way for bash script without complex rofi flags:
-             
-             # Re-implementation for robust selection:
-             # Just list descriptions.
-             :
-        fi
-        ;; 
-esac
-
-# Interactive Loop
+# Infinite loop to keep menu open until explicit exit
 while true; do
-    # Show Main Menu
-    selection=$(main_menu | $ROFI_CMD -p "Audio Control")
+    selection=$(main_menu | $ROFI_CMD "Audio")
 
     if [ -z "$selection" ]; then
         exit 0
     fi
 
     case "$selection" in
-        *"Output:"*) 
-            # Get list of sinks
-            # Format: "Description [Name]"
-            options=$(pactl list sinks | grep 'Description:' | cut -d: -f2 | sed 's/^	*//')
-            # Add Names hidden? No, let's map them.
-            # Simplest way: List descriptions, find index, get name by index.
+        "🔊 Out"*) 
+            # Generate list for rofi
+            list=""
+            for desc in "${SINK_DESCS[@]}"; do
+                list+="$desc\n"
+            done
+            chosen_desc=$(echo -e "$list" | $ROFI_CMD "Select Output")
             
-            chosen_desc=$(echo "$options" | $ROFI_CMD -p "Select Output")
+            # Find corresponding Name
             if [ -n "$chosen_desc" ]; then
-                # Find the name associated with this description
-                # Warning: This fails if multiple devices have same description.
-                sink_name=$(pactl list sinks | grep -B1 "Description: $chosen_desc" | grep "Name:" | head -n1 | cut -d: -f2 | xargs)
-                pactl set-default-sink "$sink_name"
-                # Move inputs
-                pactl list short sink-inputs | cut -f1 | while read -r input; do
-                    pactl move-sink-input "$input" "$sink_name"
+                for i in "${!SINK_DESCS[@]}"; do
+                    if [[ "${SINK_DESCS[$i]}" == "$chosen_desc" ]]; then
+                        target="${SINK_NAMES[$i]}"
+                        pactl set-default-sink "$target"
+                        # Move inputs
+                        pactl list short sink-inputs | cut -f1 | while read -r input; do
+                            pactl move-sink-input "$input" "$target"
+                        done
+                        break
+                    fi
                 done
             fi
             ;; 
             
-        *"Input:"*) 
-            options=$(pactl list sources | grep -v ".monitor" | grep 'Description:' | cut -d: -f2 | sed 's/^	*//')
-            chosen_desc=$(echo "$options" | $ROFI_CMD -p "Select Input")
+        "🎤 In"*) 
+            list=""
+            for desc in "${SOURCE_DESCS[@]}"; do
+                list+="$desc\n"
+            done
+            chosen_desc=$(echo -e "$list" | $ROFI_CMD "Select Input")
+            
             if [ -n "$chosen_desc" ]; then
-                source_name=$(pactl list sources | grep -B1 "Description: $chosen_desc" | grep "Name:" | head -n1 | cut -d: -f2 | xargs)
-                pactl set-default-source "$source_name"
+                for i in "${!SOURCE_DESCS[@]}"; do
+                    if [[ "${SOURCE_DESCS[$i]}" == "$chosen_desc" ]]; then
+                        target="${SOURCE_NAMES[$i]}"
+                        pactl set-default-source "$target"
+                        break
+                    fi
+                done
             fi
             ;; 
             
-        *"Output Volume"*) 
-            cur=$(get_sink_vol)
-            chosen=$(gen_vol_list $cur | $ROFI_CMD -p "Output Volume")
-            if [[ "$chosen" == *"Mute"* ]]; then
+        "🔈 Vol Out"*) 
+            # Simulate a slider with a list
+            # Rofi doesn't support real sliders, so we offer presets
+            options="Start pavucontrol (Advanced)\nMute\n120%\n100%\n90%\n80%\n70%\n60%\n50%\n40%\n30%\n20%\n10%\n0%"
+            choice=$(echo -e "$options" | $ROFI_CMD "Volume Out")
+            
+            if [[ "$choice" == *"pavucontrol"* ]]; then
+                pavucontrol &
+                exit 0
+            elif [[ "$choice" == "Mute" ]]; then
                 pactl set-sink-mute @DEFAULT_SINK@ toggle
-            elif [ -n "$chosen" ]; then
-                vol=$(echo "$chosen" | awk '{print $1}' | tr -d '%*')
-                pactl set-sink-volume @DEFAULT_SINK@ "${vol}%"
+            elif [[ "$choice" == *"%" ]]; then
+                val=${choice%
+}
+                pactl set-sink-volume @DEFAULT_SINK@ "${val}%"
                 pactl set-sink-mute @DEFAULT_SINK@ 0
             fi
-            ;; 
+            ;;
+
+        "🎙  Vol In"*) 
+            options="Mute\n100%\n80%\n60%\n40%\n20%\n0%"
+            choice=$(echo -e "$options" | $ROFI_CMD "Volume In")
             
-        *"Input Volume"*) 
-            cur=$(get_source_vol)
-            chosen=$(gen_vol_list $cur | $ROFI_CMD -p "Input Volume")
-            if [[ "$chosen" == *"Mute"* ]]; then
+             if [[ "$choice" == "Mute" ]]; then
                 pactl set-source-mute @DEFAULT_SOURCE@ toggle
-            elif [ -n "$chosen" ]; then
-                vol=$(echo "$chosen" | awk '{print $1}' | tr -d '%*')
-                pactl set-source-volume @DEFAULT_SOURCE@ "${vol}%"
+            elif [[ "$choice" == *"%" ]]; then
+                val=${choice%
+}
+                pactl set-source-volume @DEFAULT_SOURCE@ "${val}%"
                 pactl set-source-mute @DEFAULT_SOURCE@ 0
             fi
             ;; 
