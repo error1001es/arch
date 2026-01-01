@@ -2,7 +2,6 @@ hyprland
 kitty
 waybar
 rofi-wayland
-wofi
 swaybg
 grim
 slurp
