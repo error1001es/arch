@@ -49,7 +49,7 @@
     },
 
     "memory": {
-        "format": "  {used:0.2f}GiB",
+        "format": "  {used:0.2f} GB",
         "tooltip": false,
         "interval": 3
     },
