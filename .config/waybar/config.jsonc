@@ -56,6 +56,9 @@
             "active": "",
             "default": ""
         },
+        "persistent-workspaces": {
+            "*": 4
+        },
         "tooltip": false
     },
     "clock": {
