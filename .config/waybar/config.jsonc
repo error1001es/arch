@@ -1,7 +1,11 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 34,
+    "height": 40,
+    "margin-top": 15,
+    "margin-left": 15,
+    "margin-right": 15,
+    "margin-bottom": 0,
     "modules-left": [
         "custom/weather",
         "hyprland/workspaces",

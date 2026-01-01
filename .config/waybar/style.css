@@ -25,6 +25,8 @@
 window#waybar {
     background: @background;
     color: @foreground;
+    border: 2px solid @blue;
+    border-radius: 8px;
 }
 
 /* --- Workspaces --- */
