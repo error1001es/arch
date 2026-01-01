@@ -27,4 +27,5 @@ ttf-firacode-nerd
 ffmpeg
 playerctl
 noto-fonts-emoji
+linux-headers
 rocm-smi-lib
