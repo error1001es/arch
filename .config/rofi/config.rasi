@@ -4,6 +4,10 @@ configuration {
     display-drun: " ";
     display-run: " ";
     font: "FiraCode Nerd Font Bold 12";
+    
+    /* Keybindings */
+    kb-remove-char-back: "BackSpace";
+    kb-clear-line: "Shift+BackSpace";
 }
 
 * {
