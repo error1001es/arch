@@ -2,23 +2,32 @@
     "layer": "top",
     "position": "top",
     "height": 34,
-    "modules-left": ["custom/weather", "hyprland/workspaces"],
-    "modules-center": ["temperature", "memory", "cpu"],
-    "modules-right": ["tray", "hyprland/language", "pulseaudio", "clock"],
-    
+    "modules-left": [
+        "custom/weather",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "temperature",
+        "memory",
+        "cpu"
+    ],
+    "modules-right": [
+        "tray",
+        "hyprland/language",
+        "pulseaudio",
+        "clock"
+    ],
     "custom/weather": {
         "format": "{}",
         "interval": 300,
         "exec": "~/.config/waybar/scripts/weather.sh",
         "tooltip": false
     },
-
     "hyprland/language": {
         "format": "{}",
         "format-en": "🇺🇸 US",
-        "format-ru": "🇷🇺 RU",
+        "format-ru": "🇷🇺 RU"
     },
-
     "hyprland/workspaces": {
         "format": "{icon}",
         "on-click": "activate",
@@ -28,18 +37,15 @@
             "*": 4
         }
     },
-
     "clock": {
         "format": " {:%H:%M - %d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
-
     "cpu": {
         "format": "  {usage}%",
         "tooltip": false,
         "interval": 2
     },
-
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon4/temp3_input",
         "critical-threshold": 80,
@@ -47,13 +53,11 @@
         "tooltip": false,
         "interval": 2
     },
-
     "memory": {
         "format": "  {used:0.2f}GB",
         "tooltip": false,
         "interval": 3
     },
-
     "pulseaudio": {
         "format": "{icon}  {volume}%",
         "format-bluetooth": "{icon}  {volume}%",
@@ -65,12 +69,14 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", ""]
+            "default": [
+                "",
+                ""
+            ]
         },
         "scroll-step": 1,
         "on-click": "pavucontrol"
     },
-
     "tray": {
         "icon-size": 18,
         "spacing": 10
