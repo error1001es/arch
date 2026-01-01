@@ -58,3 +58,15 @@ window#waybar {
 
 /* Language and Tray keep default text color unless specified otherwise */
 #language { color: @foreground; }
+
+/* --- Power Group --- */
+#custom-exit, #custom-reboot, #custom-power {
+    padding: 0 10px;
+    margin: 0 5px;
+    background-color: transparent;
+    font-size: 18px;
+}
+
+#custom-exit { color: @magenta; }
+#custom-reboot { color: @yellow; }
+#custom-power { color: @red; }

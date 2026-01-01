@@ -20,7 +20,8 @@
         "tray",
         "hyprland/language",
         "pulseaudio",
-        "clock"
+        "clock",
+        "group/power"
     ],
     "mpris": {
         "format": "{status_icon} {player_icon} {title}",
@@ -108,5 +109,33 @@
     "tray": {
         "icon-size": 18,
         "spacing": 10
+    },
+    "group/power": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-power",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/power",
+            "custom/exit",
+            "custom/reboot"
+        ]
+    },
+    "custom/exit": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "hyprctl dispatch exit"
+    },
+    "custom/reboot": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "systemctl reboot"
+    },
+    "custom/power": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "systemctl poweroff"
     }
 }
