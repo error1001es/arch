@@ -3,7 +3,7 @@
     "position": "top",
     "height": 34,
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["cpu", "temperature", "memory"],
+    "modules-center": ["temperature", "memory", "cpu"],
     "modules-right": ["tray", "hyprland/language", "pulseaudio", "clock"],
     
     "hyprland/language": {
