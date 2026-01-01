@@ -3,9 +3,9 @@
 @define-color text #c0caf5;
 
 /* Colors for text now */
-@define-color color-cpu #e0af68;  /* Orange */
-@define-color color-temp #7dcfff; /* Blue */
-@define-color color-mem #9ece6a;  /* Green */
+@define-color color-cpu #e0af68;
+@define-color color-temp #7dcfff;
+@define-color color-mem #9ece6a;
 @define-color color-audio #bb9af7;
 @define-color color-clock #f7768e;
 

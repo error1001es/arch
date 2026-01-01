@@ -10,13 +10,13 @@
         "format": "{}",
         "format-en": "🇺🇸 US",
         "format-ru": "🇷🇺 RU",
-        "format-English (US)": "🇺🇸 US",
-        "format-Russian": "🇷🇺 RU"
     },
 
     "hyprland/workspaces": {
         "format": "{icon}",
         "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
         "persistent-workspaces": {
             "*": 4
         }
