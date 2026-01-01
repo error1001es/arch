@@ -1,8 +1,8 @@
 /* --- Variables --- */
 @define-color bg #1a1b26;
 @define-color text #c0caf5;
-@define-color text-dark #1a1b26;
 
+/* Colors for text now */
 @define-color color-cpu #e0af68;  /* Orange */
 @define-color color-temp #7dcfff; /* Blue */
 @define-color color-mem #9ece6a;  /* Green */
@@ -35,24 +35,18 @@ window#waybar {
 }
 
 /* --- Modules Common --- */
-#cpu, #temperature, #memory, #pulseaudio, #clock {
-    padding: 0 15px;
-    margin: 4px 6px;
-    border-radius: 15px;
-    color: @text-dark;
-}
-
-/* --- Module Specifics --- */
-#cpu { background-color: @color-cpu; }
-#temperature { background-color: @color-temp; }
-#memory { background-color: @color-mem; }
-#pulseaudio { background-color: @color-audio; }
-#clock { background-color: @color-clock; }
-
-/* --- Transparent Modules --- */
-#tray, #language {
+#cpu, #temperature, #memory, #pulseaudio, #clock, #tray, #language {
     padding: 0 10px;
     margin: 0 5px;
     background-color: transparent;
-    color: @text;
 }
+
+/* --- Module Specifics (Colored Text) --- */
+#cpu { color: @color-cpu; }
+#temperature { color: @color-temp; }
+#memory { color: @color-mem; }
+#pulseaudio { color: @color-audio; }
+#clock { color: @color-clock; }
+
+/* Language and Tray keep default text color unless specified otherwise */
+#language { color: @text; }

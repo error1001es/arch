@@ -4,12 +4,14 @@
     "height": 34,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["cpu", "temperature", "memory"],
-    "modules-right": ["pulseaudio", "hyprland/language", "tray", "clock"],
+    "modules-right": ["tray", "hyprland/language", "pulseaudio", "clock"],
     
     "hyprland/language": {
         "format": "{}",
-        "format-en": "EN",
-        "format-ru": "RU"
+        "format-en": "🇺🇸 US",
+        "format-ru": "🇷🇺 RU",
+        "format-English (US)": "🇺🇸 US",
+        "format-Russian": "🇷🇺 RU"
     },
 
     "hyprland/workspaces": {
@@ -21,7 +23,7 @@
     },
 
     "clock": {
-        "format": "{:%H:%M - %d.%m.%Y} ",
+        "format": " {:%H:%M - %d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
@@ -46,9 +48,9 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-muted": " Muted",
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "{icon}  {volume}%",
+        "format-muted": "  Muted",
         "format-icons": {
             "headphone": "",
             "hands-free": "",

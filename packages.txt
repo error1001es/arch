@@ -26,3 +26,4 @@ dolphin
 xdg-desktop-portal-gtk
 ttf-firacode-nerd
 ffmpeg
+noto-fonts-emoji
