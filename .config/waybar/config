@@ -7,7 +7,7 @@
     "modules-right": ["tray", "hyprland/language", "pulseaudio", "clock"],
     
     "custom/weather": {
-        "format": "  {}",
+        "format": "{}",
         "interval": 300,
         "exec": "~/.config/waybar/scripts/weather.sh",
         "tooltip": false
