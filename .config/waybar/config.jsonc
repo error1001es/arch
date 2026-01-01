@@ -4,7 +4,8 @@
     "height": 34,
     "modules-left": [
         "custom/weather",
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "mpris"
     ],
     "modules-center": [
         "temperature",
@@ -17,6 +18,24 @@
         "pulseaudio",
         "clock"
     ],
+    "mpris": {
+        "format": "{status_icon} {player_icon} {title}",
+        "format-paused": "{status_icon} {player_icon} {title}",
+        "player-icons": {
+            "default": "<span>󰎈</span>",
+            "mpv": "<span>󰐊</span>",
+            "spotify": "<span></span>",
+            "firefox": "<span></span>",
+            "chromium": "<span></span>"
+        },
+        "status-icons": {
+            "playing": "<span>󰐊</span>",
+            "paused": "<span>󰏤</span>",
+            "stopped": "<span>󰓛</span>"
+        },
+        "max-length": 40,
+        "tooltip": false
+    },
     "custom/weather": {
         "format": "{}",
         "interval": 300,
