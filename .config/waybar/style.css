@@ -42,6 +42,10 @@ window#waybar {
     background-color: transparent;
 }
 
+#custom-weather {
+    min-width: 50px;
+}
+
 /* --- Module Specifics (Colored Text) --- */
 #cpu { color: @color-cpu; }
 #temperature { color: @color-temp; }
