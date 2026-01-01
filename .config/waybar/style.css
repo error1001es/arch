@@ -8,6 +8,7 @@
 @define-color color-mem #9ece6a;
 @define-color color-audio #bb9af7;
 @define-color color-clock #f7768e;
+@define-color color-weather #7aa2f7;
 
 /* --- Reset & Base --- */
 * {
@@ -35,7 +36,7 @@ window#waybar {
 }
 
 /* --- Modules Common --- */
-#cpu, #temperature, #memory, #pulseaudio, #clock, #tray, #language {
+#cpu, #temperature, #memory, #pulseaudio, #clock, #tray, #language, #custom-weather {
     padding: 0 10px;
     margin: 0 5px;
     background-color: transparent;
@@ -47,6 +48,7 @@ window#waybar {
 #memory { color: @color-mem; }
 #pulseaudio { color: @color-audio; }
 #clock { color: @color-clock; }
+#custom-weather { color: @color-weather; }
 
 /* Language and Tray keep default text color unless specified otherwise */
 #language { color: @text; }

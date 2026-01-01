@@ -2,10 +2,17 @@
     "layer": "top",
     "position": "top",
     "height": 34,
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": ["custom/weather", "hyprland/workspaces"],
     "modules-center": ["temperature", "memory", "cpu"],
     "modules-right": ["tray", "hyprland/language", "pulseaudio", "clock"],
     
+    "custom/weather": {
+        "format": "  {}",
+        "interval": 30,
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "tooltip": false
+    },
+
     "hyprland/language": {
         "format": "{}",
         "format-en": "🇺🇸 US",
