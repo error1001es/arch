@@ -29,10 +29,11 @@
             "chromium": "<span></span>"
         },
         "status-icons": {
-            "playing": "<span>󰐊</span>",
-            "paused": "<span>󰏤</span>",
+            "paused": "<span>󰐊</span>",
+            "playing": "<span>󰏤</span>",
             "stopped": "<span>󰓛</span>"
         },
+        "on-click-middle": "~/.config/waybar/scripts/focus-player.sh",
         "max-length": 40,
         "tooltip": false
     },
