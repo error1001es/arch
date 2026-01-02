@@ -1,4 +1,5 @@
 hyprland
+hyprcursor
 kitty
 waybar
 rofi-wayland
