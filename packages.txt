@@ -31,3 +31,6 @@ linux-headers
 rocm-smi-lib
 vulkan-radeon
 nvidia-utils
+libinput
+libevdev
+xf86-input-libinput
