@@ -29,4 +29,5 @@ playerctl
 noto-fonts-emoji
 linux-headers
 rocm-smi-lib
+vulkan-radeon
 nvidia-utils
