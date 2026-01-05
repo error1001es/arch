@@ -22,7 +22,7 @@ nwg-look
 qt5-wayland
 qt6-wayland
 sddm
-dolphin
+yazi
 xdg-desktop-portal-gtk
 ttf-firacode-nerd
 ffmpeg
