@@ -23,6 +23,7 @@ qt5-wayland
 qt6-wayland
 sddm
 yazi
+perl-file-mimeinfo
 xdg-desktop-portal-gtk
 ttf-firacode-nerd
 ffmpeg
